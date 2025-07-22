@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jungmin Cho - Interactive Research Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Academic Calm -->
+    <!-- Application Structure Plan: A single-page dashboard structure with a sticky navigation bar for easy access to key sections: an 'Overview' with performance metrics and citation trends, an interactive/filterable 'Publications' list, a thematic 'Research Focus' section, and lists for 'Co-authors' and 'Skills'. This structure is chosen over a linear report format to allow users (e.g., academic reviewers, potential collaborators) to quickly assess research impact (Overview), dive deep into specific work (Publications), and understand the broader research narrative (Research Focus) in a non-linear, exploratory manner. -->
+    <!-- Visualization & Content Choices: 
+    - Citations: Goal: Change -> Viz: Bar Chart (Chart.js/Canvas) -> Interaction: Hover tooltips -> Justification: Clearly shows research impact growth over time.
+    - Publications: Goal: Organize/Explore -> Viz: Dynamic list of HTML cards -> Interaction: JS-powered buttons for filtering (by Type, Year, Research Theme) and sorting (by Citations, Year) -> Justification: Allows users to efficiently navigate a large body of work and find relevant papers without being overwhelmed.
+    - Research Themes: Goal: Inform/Navigate -> Viz: Thematic HTML cards with icons -> Interaction: Clicking a card filters the publication list -> Justification: Provides a high-level summary of research areas and acts as an intuitive navigation/filtering mechanism.
+    - Metrics (h-index, etc.): Goal: Inform -> Viz: Styled HTML "stat cards" -> Interaction: None -> Justification: Presents key performance indicators prominently for quick assessment.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #334155; /* slate-700 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 40vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .section-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #1e293b; /* slate-800 */
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .nav-link {
+            transition: color 0.2s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #3b82f6; /* blue-500 */
+        }
+        .filter-btn {
+            transition: all 0.2s;
+        }
+        .filter-btn.active {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-slate-800">Jungmin Cho's Portfolio</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#overview" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Overview</a>
+                        <a href="#research" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Research Focus</a>
+                        <a href="#publications" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Publications</a>
+                        <a href="#skills" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Skills</a>
+                        <a href="#co-authors" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Co-authors</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        
+        <section id="profile" class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900">조정민 (Jungmin Cho)</h2>
+            <p class="mt-2 text-lg text-slate-600">PhD Candidate in Civil Engineering, Kyonggi University</p>
+            <div class="mt-4 flex justify-center items-center space-x-4 text-sm text-slate-500">
+                <a href="mailto:chominit@kyonggi.ac.kr" class="hover:text-blue-500">📧 chominit@kyonggi.ac.kr</a>
+                <span>•</span>
+                <a href="https://scholar.google.com/citations?user=7CqixwMAAAAJ" target="_blank" class="hover:text-blue-500">Google Scholar</a>
+                <span>•</span>
+                <a href="https://orcid.org/0000-0001-7008-2310" target="_blank" class="hover:text-blue-500">ORCID</a>
+            </div>
+            <div class="mt-6 flex flex-wrap justify-center gap-2">
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Photogrammetry</span>
+                <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">LiDAR</span>
+                <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Indoor Positioning</span>
+                <span class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Smart Construction</span>
+            </div>
+        </section>
+
+        <section id="overview" class="mb-16 scroll-mt-20">
+            <h3 class="section-title">Research Overview</h3>
+            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10">
+                본 개요 섹션은 조정민 연구자의 핵심 연구 성과를 시각적으로 요약하여 보여줍니다. 주요 지표를 통해 연구 영향력을 빠르게 파악하고, 연도별 피인용 횟수 그래프를 통해 연구 성과의 성장 추세를 직관적으로 확인할 수 있습니다.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center mb-12">
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="text-5xl font-bold text-blue-600">110</div>
+                    <div class="mt-2 text-slate-500">Total Citations</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="text-5xl font-bold text-blue-600">6</div>
+                    <div class="mt-2 text-slate-500">h-index</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="text-5xl font-bold text-blue-600">6</div>
+                    <div class="mt-2 text-slate-500">i10-index</div>
+                </div>
+            </div>
+            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-md">
+                <h4 class="text-lg font-semibold text-slate-800 mb-4 text-center">Citations per Year</h4>
+                <div class="chart-container">
+                    <canvas id="citationsChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="research" class="mb-16 scroll-mt-20">
+            <h3 class="section-title">Research Focus</h3>
+            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10">
+                주요 연구 분야를 세 가지 핵심 주제로 나누어 소개합니다. 각 주제는 연구의 목표와 접근 방식을 설명하며, 관련 기술과 대표 논문을 통해 연구 내용에 대한 깊이 있는 이해를 돕습니다. 사용자는 각 주제를 클릭하여 관련된 논문 목록을 바로 확인할 수 있습니다.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="research-card bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow cursor-pointer" data-tag="UAV">
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">UAV 사진측량 및 인프라 모니터링</h4>
+                    <p class="text-slate-600 text-sm">RTK-UAV를 활용하여 사면 변위와 같은 토목 인프라를 고정밀도로 모니터링하는 연구입니다. GCP/PPK 기술을 통해 측량 정확도를 최적화하고, 딥러닝(YOLOv8)을 융합하여 포인트 클라우드에서 객체 정보를 자동으로 추출하는 기술을 개발합니다.</p>
+                </div>
+                <div class="research-card bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow cursor-pointer" data-tag="UWB">
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">UWB/WiFi 기반 실내 측위 시스템</h4>
+                    <p class="text-slate-600 text-sm">건설 현장과 같은 복잡한 실내 환경에서 작업자와 장비의 위치를 정밀하게 추적하는 3D 측위 시스템을 연구합니다. UWB 앵커의 최적 배치 전략과 반복 계산 기반의 고정밀 측위 알고리즘을 개발하여 시스템의 정확도와 안정성을 향상시킵니다.</p>
+                </div>
+                <div class="research-card bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow cursor-pointer" data-tag="Micropile">
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">지반공학 및 마이크로파일 거동 분석</h4>
+                    <p class="text-slate-600 text-sm">마이크로파일의 지지력과 침하 거동을 분석하는 연구입니다. 현장 시험과 3D 유한요소해석(FEM)을 통해 암반에 설치된 마이크로파일의 거동을 분석하고, 상부 지층의 주면 마찰력을 고려한 수정된 지지력 공식을 제안하여 보다 효율적인 설계를 목표로 합니다.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="publications" class="mb-16 scroll-mt-20">
+            <h3 class="section-title">Publications</h3>
+            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10">
+                모든 연구 실적을 확인할 수 있는 공간입니다. 논문 종류, 연구 주제, 발표 연도별로 필터링하거나 피인용 횟수 순으로 정렬하여 원하는 논문을 쉽게 찾아볼 수 있습니다. 각 논문 카드는 제목, 저자, 학술지 정보 등 핵심 내용을 요약하여 제공합니다.
+            </p>
+            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-md">
+                <div class="flex flex-wrap gap-4 mb-6 items-center">
+                    <div class="flex-grow">
+                        <span class="font-semibold mr-3">Filter by Type:</span>
+                        <div id="type-filters" class="inline-flex rounded-md shadow-sm" role="group">
+                            <button type="button" class="filter-btn active px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100" data-filter="all">All</button>
+                            <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100" data-filter="International Journal">Int'l Journal</button>
+                            <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-r border-gray-200 hover:bg-gray-100" data-filter="Domestic Journal">Domestic Journal</button>
+                            <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100" data-filter="Conference">Conference</button>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="font-semibold mr-3">Sort by:</span>
+                        <select id="sort-select" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <option value="year_desc">Year (Newest)</option>
+                            <option value="citations_desc">Citations (Most)</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="publications-list" class="space-y-4">
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="mb-16 scroll-mt-20">
+            <h3 class="section-title">Technical Skills</h3>
+             <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10">
+                연구 수행에 필요한 핵심 기술 역량을 분야별로 정리했습니다. 공간정보 기술부터 프로그래밍, 데이터 분석, 하드웨어 시스템 통합, 지반공학 해석에 이르기까지, 물리적 세계와 디지털 분석을 잇는 융합적 전문성을 확인할 수 있습니다.
+            </p>
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="font-bold text-lg text-slate-800 mb-3">Geospatial Technologies</h4>
+                        <ul class="list-disc list-inside space-y-1 text-slate-600">
+                            <li>RTK-UAV Operation & Mission Planning</li>
+                            <li>Digital Photogrammetry</li>
+                            <li>3D Laser Scanning</li>
+                            <li>Geographic Information Systems (GIS)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-slate-800 mb-3">Programming & Data Analysis</h4>
+                        <ul class="list-disc list-inside space-y-1 text-slate-600">
+                            <li>Python, MATLAB</li>
+                            <li>Deep Learning (PyTorch, YOLOv8)</li>
+                            <li>Point Cloud Processing (Open3D)</li>
+                            <li>Statistical Data Analysis</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-slate-800 mb-3">Hardware & Sensor Systems</h4>
+                        <ul class="list-disc list-inside space-y-1 text-slate-600">
+                            <li>Ultra-Wideband (UWB) System Integration</li>
+                            <li>IoT Environmental Sensor Integration</li>
+                            <li>GNSS/GPS Systems</li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h4 class="font-bold text-lg text-slate-800 mb-3">Geotechnical Engineering</h4>
+                        <ul class="list-disc list-inside space-y-1 text-slate-600">
+                            <li>Micropile Field Test Analysis</li>
+                            <li>3D FEM Numerical Analysis (Midas GTS NX)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="co-authors" class="scroll-mt-20">
+            <h3 class="section-title">Main Co-authors</h3>
+            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10">
+                주요 공동 연구자 목록입니다. 다양한 분야의 전문가들과 긴밀하게 협력하며 연구를 수행하고 있음을 보여줍니다.
+            </p>
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 text-center">
+                    <div>
+                        <p class="font-semibold text-slate-800">Byoungkil Lee</p>
+                        <p class="text-xs text-slate-500">Kyonggi University</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-slate-800">Seungjin Jeong</p>
+                        <p class="text-xs text-slate-500">Kyonggi University</p>
+                    </div>
+                     <div>
+                        <p class="font-semibold text-slate-800">Gwang-Hee Kim</p>
+                        <p class="text-xs text-slate-500">Kyonggi University</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-slate-800">Youngje Sung</p>
+                        <p class="text-xs text-slate-500">Kyonggi University</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-slate-800">Jongseok Lee</p>
+                        <p class="text-xs text-slate-500">Kyonggi University</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white mt-16 border-t">
+        <div class="container mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-slate-500">
+            <p>&copy; 2025 Jungmin Cho. All Rights Reserved.</p>
+            <p class="mt-1">This interactive portfolio was generated to showcase research achievements.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const publications = [
+        { title: 'Generate point clouds with detected object information using YOLOv8s Seg model and RTK UAV photogrammetry', authors: 'J Cho, S Jeong, J Lee, T Kim, Y Moon, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and Cartography', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV'] },
+        { title: 'Real-time indoor localization and safety applications using UWB in construction', authors: 'J Cho, S Jeong, JY Kim, GH Kim, J Lee, B Lee', journal: 'KSCE Journal of Civil Engineering', year: 2025, citations: 3, type: 'International Journal', tags: ['UWB'] },
+        { title: 'Optimal ground control point layout for UAV photogrammetry in high precision 3D mapping', authors: 'JM Cho, S Jeong, B Lee', journal: 'Measurement', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV'] },
+        { title: 'Implementation of Integrated Smart Construction Monitoring System Based on Point Cloud Data and IoT Technique', authors: 'JY Kim, S Kang, J Cho, S Jeong, S Kim, Y Sung, B Lee, GH Kim', journal: 'Sensors', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV', 'UWB'] },
+        { title: 'Suggest a combination of multi-frequency WiFi bands for ranging indoor positioning', authors: 'S Jeong, J Cho, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and Cartography', year: 2025, citations: 0, type: 'International Journal', tags: ['UWB'] },
+        { title: 'A Study on Anchor Placement and 3D Positioning Algorithm for UWB Application in Small Sites', authors: 'J Cho, S Jeong, B Lee', journal: 'KSCE Journal of Civil Engineering', year: 2024, citations: 14, type: 'International Journal', tags: ['UWB'] },
+        { title: 'Optimal layout of four anchors to improve accuracy of Ultra-Wide band based indoor positioning', authors: 'J Cho, B Lee', journal: 'Expert Systems with Applications', year: 2024, citations: 10, type: 'International Journal', tags: ['UWB'] },
+        { title: 'Limitations of 3D Indoor Positioning Using 2.4 GHz WiFi', authors: 'SJ Jeong, J Cho, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and Cartography', year: 2024, citations: 6, type: 'International Journal', tags: ['UWB'] },
+        { title: 'Erratum to: A Study on Anchor Placement and 3D Positioning Algorithm for UWB Application in Small Sites', authors: 'J Cho, S Jeong, B Lee', journal: 'KSCE Journal of Civil Engineering', year: 2024, citations: 1, type: 'International Journal', tags: ['UWB'] },
+        { title: 'Lightweighting Point Clouds for Linear Object Extraction in Old Urban Extraction in Old Urban (Loosely Coupled Deep Learning and Photogrammetry)', authors: 'J Cho, B Lee', journal: 'Available at SSRN 4876769', year: 2024, citations: 0, type: 'Conference', tags: ['UAV'] },
+        { title: 'GCP and PPK utilization plan to deal with RTK signal interruption in RTK-UAV photogrammetry', authors: 'J Cho, B Lee', journal: 'Drones', year: 2023, citations: 19, type: 'International Journal', tags: ['UAV'] },
+        { title: 'Proposal of the modified bearing capacity formula of micropile considering the skin friction of the upper ground', authors: 'J Cho', journal: 'Kyonggi University (Master Thesis)', year: 2023, citations: 0, type: 'Conference', tags: ['Micropile'] },
+        { title: '표준관입시험 공공데이터를 활용한 인천광역시 토사물성치의 추정', authors: '김민석, 조수호, 조정민, 정승진, 이병길', journal: '대한토목학회 학술대회', year: 2023, citations: 0, type: 'Conference', tags: ['Micropile'] },
+        { title: 'UAV 이미지 기반의 기 훈련된 딥러닝 모델을 활용한 포트홀 검출에 관한 연구', authors: '조수호, 김민석, 조정민, 정승진, 이병길', journal: '대한토목학회 학술대회', year: 2023, citations: 0, type: 'Conference', tags: ['UAV'] },
+        { title: 'Application of UAV Photogrammetry to Slope-Displacement Measurement', authors: 'J Cho, J Lee, B Lee', journal: 'KSCE Journal of Civil Engineering', year: 2022, citations: 23, type: 'International Journal', tags: ['UAV'] },
+        { title: 'Calculation method for settlement of micropile installed in rock layers through field tests', authors: 'TH Hwang, JM Cho, L YS', journal: 'GEOMECHANICS AND ENGINEERING', year: 2022, citations: 5, type: 'International Journal', tags: ['Micropile'] },
+        { title: 'RTK 신호가 단절된 UAV 의 항공삼각측량 정확도 평가 연구', authors: '김민석, 조정민, 이병길', journal: '대한토목학회 학술대회', year: 2022, citations: 0, type: 'Conference', tags: ['UAV'] },
+        { title: 'A study on the accuracy evaluation of UAV photogrammetry using oblique and vertical images', authors: 'J Cho, J Lee, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and Cartography', year: 2021, citations: 12, type: 'International Journal', tags: ['UAV'] },
+        { title: 'A Study on the Displacement Measurement of the Slope using Network RTK UAV', authors: '정민조, 종석이, 재우양, 병길이', journal: 'Journal of the Korean Society of Hazard Mitigation', year: 2021, citations: 1, type: 'Domestic Journal', tags: ['UAV'] },
+        { title: 'A study on the optimal shooting conditions of UAV for 3D production and orthophoto generation', authors: 'J Cho, J Lee, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and Cartography', year: 2020, citations: 16, type: 'International Journal', tags: ['UAV'] },
+    ];
+
+    const publicationsList = document.getElementById('publications-list');
+    const typeFilters = document.getElementById('type-filters');
+    const sortSelect = document.getElementById('sort-select');
+    const researchCards = document.querySelectorAll('.research-card');
+
+    let currentFilters = {
+        type: 'all',
+        tag: 'all'
+    };
+    
+    function renderPublications() {
+        const sortBy = sortSelect.value;
+
+        const filtered = publications.filter(p => {
+            const typeMatch = currentFilters.type === 'all' || p.type === currentFilters.type;
+            const tagMatch = currentFilters.tag === 'all' || p.tags.includes(currentFilters.tag);
+            return typeMatch && tagMatch;
+        });
+
+        const sorted = filtered.sort((a, b) => {
+            if (sortBy === 'year_desc') {
+                return b.year - a.year;
+            } else if (sortBy === 'citations_desc') {
+                return b.citations - a.citations;
+            }
+            return 0;
+        });
+
+        publicationsList.innerHTML = '';
+        if (sorted.length === 0) {
+            publicationsList.innerHTML = `<p class="text-center text-slate-500">No publications found for the selected filters.</p>`;
+            return;
+        }
+        
+        sorted.forEach(p => {
+            const pubElement = document.createElement('div');
+            pubElement.className = 'border border-slate-200 bg-slate-50 p-4 rounded-lg';
+            pubElement.innerHTML = `
+                <h5 class="font-bold text-md text-slate-800">${p.title}</h5>
+                <p class="text-sm text-slate-600 mt-1">${p.authors}</p>
+                <div class="flex flex-wrap items-center justify-between mt-2 text-sm">
+                    <p class="text-slate-500 italic">${p.journal}, ${p.year}</p>
+                    <p class="font-semibold text-blue-600">Cited by ${p.citations}</p>
+                </div>
+            `;
+            publicationsList.appendChild(pubElement);
+        });
+    }
+
+    typeFilters.addEventListener('click', (e) => {
+        if (e.target.tagName === 'BUTTON') {
+            typeFilters.querySelector('.active').classList.remove('active');
+            e.target.classList.add('active');
+            currentFilters.type = e.target.dataset.filter;
+            renderPublications();
+        }
+    });
+
+    researchCards.forEach(card => {
+        card.addEventListener('click', () => {
+            currentFilters.tag = card.dataset.tag;
+            document.querySelector('a[href="#publications"]').click();
+            renderPublications();
+        });
+    });
+
+    sortSelect.addEventListener('change', renderPublications);
+    
+    const ctx = document.getElementById('citationsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['2020', '2021', '2022', '2023', '2024'],
+            datasets: [{
+                label: 'Citations',
+                data: [16, 13, 28, 19, 31],
+                backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                borderColor: 'rgba(59, 130, 246, 1)',
+                borderWidth: 1,
+                borderRadius: 5,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: '#e2e8f0' // slate-200
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: '#1e293b', // slate-800
+                    titleFont: { size: 14 },
+                    bodyFont: { size: 12 },
+                    padding: 10,
+                    cornerRadius: 4,
+                }
+            }
+        }
+    });
+
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id]');
+    
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - 80) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    renderPublications();
+});
+</script>
+</body>
+</html>
