@@ -91,6 +91,7 @@
                         <a href="#overview" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.overview">Overview</a>
                         <a href="#research" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.research">Research Focus</a>
                         <a href="#publications" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.publications">Publications</a>
+                        <a href="#peer-review" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.peer_review">Peer Review</a>
                         <a href="#skills" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.skills">Skills</a>
                     </div>
                 </div>
@@ -177,7 +178,7 @@
                             <button type="button" class="filter-btn active px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100" data-filter="all" data-lang-key="publications.filter.all"></button>
                             <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100" data-filter="International Journal" data-lang-key="publications.filter.intl"></button>
                             <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-r border-gray-200 hover:bg-gray-100" data-filter="Domestic Journal" data-lang-key="publications.filter.domestic"></button>
-                            <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100" data-filter="Conference" data-lang-key="publications.filter.conf"></button>
+                            <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100" data-filter="Thesis" data-lang-key="publications.filter.thesis"></button>
                         </div>
                     </div>
                     <div>
@@ -189,6 +190,25 @@
                     </div>
                 </div>
                 <div id="publications-list" class="space-y-4"></div>
+            </div>
+        </section>
+
+        <section id="peer-review" class="mb-16 scroll-mt-20">
+            <h3 class="section-title" data-lang-key="peer_review.title"></h3>
+            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="peer_review.desc"></p>
+            <div class="card p-6">
+                <h4 class="font-bold text-lg text-slate-800 mb-4 text-center" data-lang-key="peer_review.total"></h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4 max-w-4xl mx-auto">
+                    <div data-lang-key="peer_review.ksce"></div>
+                    <div data-lang-key="peer_review.eswa"></div>
+                    <div data-lang-key="peer_review.measurement"></div>
+                    <div data-lang-key="peer_review.computers"></div>
+                    <div data-lang-key="peer_review.gps"></div>
+                    <div data-lang-key="peer_review.reports"></div>
+                    <div data-lang-key="peer_review.drones"></div>
+                    <div data-lang-key="peer_review.sensors"></div>
+                    <div data-lang-key="peer_review.water"></div>
+                </div>
             </div>
         </section>
 
@@ -230,6 +250,17 @@
                             <li>3D FEM Numerical Analysis (Midas GTS NX)</li>
                         </ul>
                     </div>
+                    <div class="md:col-span-2 lg:col-span-3">
+                        <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.cert.title"></h4>
+                        <ul class="list-disc list-inside space-y-1 text-slate-600 columns-1 md:columns-2">
+                            <li data-lang-key="skills.cert.civil"></li>
+                            <li data-lang-key="skills.cert.safety"></li>
+                            <li data-lang-key="skills.cert.materials"></li>
+                            <li data-lang-key="skills.cert.geospatial"></li>
+                            <li data-lang-key="skills.cert.history"></li>
+                            <li data-lang-key="skills.cert.drone"></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
@@ -248,15 +279,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const langData = {
         ko: {
-            "header.title": "조정민의 CV",
+            "header.title": "조정민의 포트폴리오",
             "nav.overview": "개요",
             "nav.research": "연구 분야",
             "nav.publications": "논문 실적",
+            "nav.peer_review": "논문 심사",
             "nav.skills": "보유 기술",
             "lang.korean": "Korean",
             "lang.english": "English",
             "profile.name": "조정민 (Jungmin Cho)",
-            "profile.title": "경기대학교 토목공학과 박사과정",
+            "profile.title": "경기대학교 토목공학과 박사수료",
             "overview.title": "연구 개요",
             "overview.desc": "본 개요 섹션은 조정민 연구자의 핵심 연구 성과를 시각적으로 요약하여 보여줍니다. 주요 지표를 통해 연구 영향력을 빠르게 파악하고, 연도별 피인용 횟수 그래프를 통해 연구 성과의 성장 추세를 직관적으로 확인할 수 있습니다.",
             "overview.citations": "총 피인용",
@@ -276,26 +308,46 @@ document.addEventListener('DOMContentLoaded', function () {
             "publications.filter.all": "전체",
             "publications.filter.intl": "국제 학술지",
             "publications.filter.domestic": "국내 학술지",
-            "publications.filter.conf": "학술 대회",
+            "publications.filter.thesis": "학위 논문",
             "publications.sortBy": "정렬 기준:",
             "publications.sort.year": "최신순",
             "publications.sort.citations": "피인용순",
             "publications.citedBy": "피인용",
             "publications.noResult": "선택한 필터에 해당하는 논문이 없습니다.",
-            "skills.title": "보유 기술",
-            "skills.desc": "연구 수행에 필요한 핵심 기술 역량을 분야별로 정리했습니다. 공간정보 기술부터 프로그래밍, 데이터 분석, 하드웨어 시스템 통합, 지반공학 해석에 이르기까지, 물리적 세계와 디지털 분석을 잇는 융합적 전문성을 확인할 수 있습니다.",
+            "peer_review.title": "논문 심사 활동",
+            "peer_review.desc": "다양한 국제 학술지의 동료 심사(Peer Review) 과정에 참여하며 학술 커뮤니티에 기여하고 있습니다. 이는 해당 연구 분야에 대한 깊이 있는 전문성과 동향 파악 능력을 입증합니다.",
+            "peer_review.total": "총 35회 심사 (9개 저널)",
+            "peer_review.ksce": "KSCE Journal of Civil Engineering (15회)",
+            "peer_review.eswa": "Expert systems with applications (9회)",
+            "peer_review.measurement": "Measurement (2회)",
+            "peer_review.computers": "Computers & electrical engineering (2회)",
+            "peer_review.gps": "GPS solutions (2회)",
+            "peer_review.reports": "Scientific Reports (2회)",
+            "peer_review.drones": "Drones (1회)",
+            "peer_review.sensors": "Sensors (1회)",
+            "peer_review.water": "Water (1회)",
+            "skills.title": "보유 기술 및 자격",
+            "skills.desc": "연구 수행에 필요한 핵심 기술 역량과 관련 국가기술자격을 분야별로 정리했습니다. 이는 물리적 세계와 디지털 분석을 잇는 융합적 전문성을 보여줍니다.",
             "skills.geo.title": "공간정보 기술",
             "skills.prog.title": "프로그래밍 & 데이터 분석",
             "skills.hw.title": "하드웨어 & 센서 시스템",
             "skills.geotech.title": "지반공학 해석",
+            "skills.cert.title": "자격 사항",
+            "skills.cert.civil": "토목기사",
+            "skills.cert.safety": "건설안전기사",
+            "skills.cert.materials": "건설재료시험기사",
+            "skills.cert.geospatial": "측량및지형공간정보기사",
+            "skills.cert.history": "한국사능력검정시험 3급 (고급)",
+            "skills.cert.drone": "초경량비행장치 무인멀티콥터 지도조종자(교관)",
             "footer.copyright": "© 2025 Jungmin Cho. 모든 권리 보유.",
-            "footer.desc": "이 인터랙티브 조정민의 CV 연구 성과를 보여주기 위해 제작되었습니다."
+            "footer.desc": "이 인터랙티브 포트폴리오는 연구 성과를 보여주기 위해 제작되었습니다."
         },
         en: {
-            "header.title": "Jungmin Cho's CV",
+            "header.title": "Jungmin Cho's Portfolio",
             "nav.overview": "Overview",
             "nav.research": "Research Focus",
             "nav.publications": "Publications",
+            "nav.peer_review": "Peer Review",
             "nav.skills": "Skills",
             "lang.korean": "Korean",
             "lang.english": "English",
@@ -320,18 +372,37 @@ document.addEventListener('DOMContentLoaded', function () {
             "publications.filter.all": "All",
             "publications.filter.intl": "Int'l Journal",
             "publications.filter.domestic": "Domestic Journal",
-            "publications.filter.conf": "Conference",
+            "publications.filter.thesis": "Thesis",
             "publications.sortBy": "Sort by:",
             "publications.sort.year": "Year (Newest)",
             "publications.sort.citations": "Citations (Most)",
             "publications.citedBy": "Cited by",
             "publications.noResult": "No publications found for the selected filters.",
-            "skills.title": "Technical Skills",
-            "skills.desc": "This section summarizes the core technical competencies required for research. It demonstrates a convergent expertise connecting the physical world and digital analysis, from geospatial technology to programming, data analysis, hardware system integration, and geotechnical analysis.",
+            "peer_review.title": "Peer Review Activities",
+            "peer_review.desc": "Contributing to the academic community by participating in the peer review process for various international academic journals. This demonstrates in-depth expertise and an understanding of current trends in the research field.",
+            "peer_review.total": "35 reviews for 9 journals",
+            "peer_review.ksce": "KSCE Journal of Civil Engineering (15 reviews)",
+            "peer_review.eswa": "Expert systems with applications (9 reviews)",
+            "peer_review.measurement": "Measurement (2 reviews)",
+            "peer_review.computers": "Computers & electrical engineering (2 reviews)",
+            "peer_review.gps": "GPS solutions (2 reviews)",
+            "peer_review.reports": "Scientific Reports (2 reviews)",
+            "peer_review.drones": "Drones (1 review)",
+            "peer_review.sensors": "Sensors (1 review)",
+            "peer_review.water": "Water (1 review)",
+            "skills.title": "Skills & Certifications",
+            "skills.desc": "This section summarizes the core technical competencies and related national technical qualifications required for research, demonstrating a convergent expertise that connects the physical world and digital analysis.",
             "skills.geo.title": "Geospatial Technologies",
             "skills.prog.title": "Programming & Data Analysis",
             "skills.hw.title": "Hardware & Sensor Systems",
             "skills.geotech.title": "Geotechnical Engineering",
+            "skills.cert.title": "Certifications",
+            "skills.cert.civil": "Engineer, Civil Engineering",
+            "skills.cert.safety": "Engineer, Construction Safety",
+            "skills.cert.materials": "Engineer, Construction Material Test",
+            "skills.cert.geospatial": "Engineer, Surveying and Geoinformatics",
+            "skills.cert.history": "Advanced Korean History Test (Level 3)",
+            "skills.cert.drone": "Instructor Pilot, Unmanned Multicopter (Drone)",
             "footer.copyright": "© 2025 Jungmin Cho. All Rights Reserved.",
             "footer.desc": "This interactive portfolio was generated to showcase research achievements."
         }
@@ -339,21 +410,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const publicationsData = {
         ko: [
-            { title: 'UAV 사진측량의 사면 변위 측정 적용', authors: '조정민, 이종석, 이병길', journal: '대한토목학회 논문집', year: 2022, citations: 23, type: 'International Journal', tags: ['UAV'] },
+            { title: 'UAV 사진측량의 사면 변위 측정 적용', authors: '조정민, 이종석, 이병길', journal: 'KSCE Journal of Civil Engineering', year: 2022, citations: 23, type: 'International Journal', tags: ['UAV'] },
             { title: 'RTK-UAV 사진측량에서 RTK 신호 단절에 대처하기 위한 GCP 및 PPK 활용 방안', authors: '조정민, 이병길', journal: 'Drones', year: 2023, citations: 19, type: 'International Journal', tags: ['UAV'] },
             { title: '3차원 제작 및 정사사진 생성을 위한 UAV의 최적 촬영 조건에 관한 연구', authors: '조정민, 이종석, 이병길', journal: '한국측량학회지', year: 2020, citations: 16, type: 'International Journal', tags: ['UAV'] },
-            { title: '소규모 현장에서의 UWB 적용을 위한 앵커 배치 및 3D 측위 알고리즘 연구', authors: '조정민, 정승진, 이병길', journal: '대한토목학회 논문집', year: 2024, citations: 14, type: 'International Journal', tags: ['UWB'] },
+            { title: '소규모 현장에서의 UWB 적용을 위한 앵커 배치 및 3D 측위 알고리즘 연구', authors: '조정민, 정승진, 이병길', journal: 'KSCE Journal of Civil Engineering', year: 2024, citations: 14, type: 'International Journal', tags: ['UWB'] },
             { title: '경사 및 수직 영상을 이용한 UAV 사진측량 정확도 평가 연구', authors: '조정민, 이종석, 이병길', journal: '한국측량학회지', year: 2021, citations: 12, type: 'International Journal', tags: ['UAV'] },
-            { title: '초광대역 기반 실내 측위 정확도 향상을 위한 4개 앵커의 최적 배치', authors: '조정민, 이병길', journal: 'Expert Systems with Applications', year: 2024, citations: 10, type: 'International Journal', tags: ['UWB'] },
+            { title: '초광대역 기반 실내 측위 정확도 향상을 위한 4개 앵커의 최적 배치 (JIF 91%)', authors: '조정민, 이병길', journal: 'Expert Systems with Applications', year: 2024, citations: 10, type: 'International Journal', tags: ['UWB'] },
             { title: '2.4 GHz WiFi를 이용한 3D 실내 측위의 한계', authors: '정승진, 조정민, 이병길', journal: '한국측량학회지', year: 2024, citations: 6, type: 'International Journal', tags: ['UWB'] },
-            { title: '현장 시험을 통한 암반층에 설치된 마이크로파일의 침하량 산정 방법', authors: '황태하, 조정민, 이영생', journal: 'GEOMECHANICS AND ENGINEERING', year: 2022, citations: 5, type: 'International Journal', tags: ['Micropile'] },
-            { title: '건설 현장에서의 UWB를 활용한 실시간 실내 측위 및 안전 어플리케이션', authors: '조정민, 정승진, 김진엽, 김광희, 이종석, 이병길', journal: '대한토목학회 논문집', year: 2025, citations: 3, type: 'International Journal', tags: ['UWB'] },
-            { title: '네트워크 RTK UAV를 이용한 사면의 변위 계측에 관한 연구', authors: '정민조, 종석이, 재우양, 병길이', journal: '한국방재학회 논문집', year: 2021, citations: 1, type: 'Domestic Journal', tags: ['UAV'] },
-            { title: '정정: 소규모 현장에서의 UWB 적용을 위한 앵커 배치 및 3D 측위 알고리즘 연구', authors: '조정민, 정승진, 이병길', journal: '대한토목학회 논문집', year: 2024, citations: 1, type: 'International Journal', tags: ['UWB'] },
-            { title: '고정밀 3D 매핑을 위한 UAV 사진측량의 최적 지상기준점 배치', authors: '조정민, 정승진, 이병길', journal: 'Measurement', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV'] },
-            { title: '상부 지반의 주면 마찰력을 고려한 마이크로파일의 수정 지지력 공식 제안', authors: '조정민', journal: '경기대학교 (석사학위논문)', year: 2023, citations: 0, type: 'Conference', tags: ['Micropile'] },
-            { title: 'YOLOv8s Seg 모델과 RTK UAV 사진측량을 이용한 객체 정보 탐지 포인트 클라우드 생성', authors: '조정민, 정승진, 이종석, 김태현, 문영민, 이병길', journal: '한국측량학회지', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV'] },
-            { title: '포인트 클라우드 데이터와 IoT 기술 기반의 통합 스마트 건설 모니터링 시스템 구현', authors: '김진엽, 강석현, 조정민, 정승진, 김성민, 성영제, 이병길, 김광희', journal: 'Sensors', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV', 'UWB'] },
+            { title: '현장 시험을 통한 암반층에 설치된 마이크로파일의 침하량 산정 방법', authors: '황태현, 조정민, 이영생', journal: 'GEOMECHANICS AND ENGINEERING', year: 2022, citations: 5, type: 'International Journal', tags: ['Micropile'] },
+            { title: '건설 현장에서의 UWB를 활용한 실시간 실내 측위 및 안전 어플리케이션', authors: '조정민, 정승진, 김주용, 김광희, 이종석, 이병길', journal: 'KSCE Journal of Civil Engineering', year: 2025, citations: 3, type: 'International Journal', tags: ['UWB'] },
+            { title: '네트워크 RTK UAV를 이용한 사면의 변위 계측에 관한 연구', authors: '조정민, 이종석, 양재우, 이병길', journal: '한국방재학회 논문집', year: 2021, citations: 1, type: 'Domestic Journal', tags: ['UAV'] },
+            { title: '정정: 소규모 현장에서의 UWB 적용을 위한 앵커 배치 및 3D 측위 알고리즘 연구', authors: '조정민, 정승진, 이병길', journal: 'KSCE Journal of Civil Engineering', year: 2024, citations: 1, type: 'International Journal', tags: ['UWB'] },
+            { title: '고정밀 3D 매핑을 위한 UAV 사진측량의 최적 지상기준점 배치 (JIF 90%)', authors: '조정민, 정승진, 이병길', journal: 'Measurement', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV'] },
+            { title: '상부 지반의 주면 마찰력을 고려한 마이크로파일의 수정 지지력 공식 제안', authors: '조정민', journal: '경기대학교 (석사학위논문)', year: 2023, citations: 0, type: 'Thesis', tags: ['Micropile'] },
+            { title: 'YOLOv8s Seg 모델과 RTK UAV 사진측량을 이용한 객체 정보 탐지 포인트 클라우드 생성', authors: '조정민, 정승진, 이종석, 김태훈, 문유미, 이병길', journal: '한국측량학회지', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV'] },
+            { title: '실내측위를 위한 거리 측정에 적합한 다중주파수 WiFi 밴드 조합 제안', authors: '정승진, 조정민, 이병길', journal: '한국측량학회지', year: 2025, citations: 0, type: 'International Journal', tags: ['UWB'] },
+            { title: '포인트 클라우드 데이터와 IoT 기술 기반의 통합 스마트 건설 모니터링 시스템 구현', authors: '김주용, 강수현, 조정민, 정승진, 김상희, 성영제, 이병길, 김광희', journal: 'Sensors', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV', 'UWB'] },
         ],
         en: [
             { title: 'Application of UAV Photogrammetry to Slope-Displacement Measurement', authors: 'J Cho, J Lee, B Lee', journal: 'KSCE Journal of Civil Engineering', year: 2022, citations: 23, type: 'International Journal', tags: ['UAV'] },
@@ -361,15 +433,16 @@ document.addEventListener('DOMContentLoaded', function () {
             { title: 'A study on the optimal shooting conditions of UAV for 3D production and orthophoto generation', authors: 'J Cho, J Lee, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and…', year: 2020, citations: 16, type: 'International Journal', tags: ['UAV'] },
             { title: 'A Study on Anchor Placement and 3D Positioning Algorithm for UWB Application in Small Sites', authors: 'J Cho, S Jeong, B Lee', journal: 'KSCE Journal of Civil Engineering', year: 2024, citations: 14, type: 'International Journal', tags: ['UWB'] },
             { title: 'A study on the accuracy evaluation of UAV photogrammetry using oblique and vertical images', authors: 'J Cho, J Lee, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and…', year: 2021, citations: 12, type: 'International Journal', tags: ['UAV'] },
-            { title: 'Optimal layout of four anchors to improve accuracy of Ultra-Wide band based indoor positioning', authors: 'J Cho, B Lee', journal: 'Expert Systems with Applications', year: 2024, citations: 10, type: 'International Journal', tags: ['UWB'] },
+            { title: 'Optimal layout of four anchors to improve accuracy of Ultra-Wide band based indoor positioning (JIF 91%)', authors: 'J Cho, B Lee', journal: 'Expert Systems with Applications', year: 2024, citations: 10, type: 'International Journal', tags: ['UWB'] },
             { title: 'Limitations of 3D Indoor Positioning Using 2.4 GHz WiFi', authors: 'SJ Jeong, J Cho, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and…', year: 2024, citations: 6, type: 'International Journal', tags: ['UWB'] },
-            { title: 'Calculation method for settlement of micropile installed in rock layers through field tests', authors: 'TH Hwang, JM Cho, L YS', journal: 'GEOMECHANICS AND ENGINEERING', year: 2022, citations: 5, type: 'International Journal', tags: ['Micropile'] },
+            { title: 'Calculation method for settlement of micropile installed in rock layers through field tests', authors: 'TH Hwang, J Cho, L YS', journal: 'GEOMECHANICS AND ENGINEERING', year: 2022, citations: 5, type: 'International Journal', tags: ['Micropile'] },
             { title: 'Real-time indoor localization and safety applications using UWB in construction', authors: 'J Cho, S Jeong, JY Kim, GH Kim, J Lee, B Lee', journal: 'KSCE Journal of Civil Engineering', year: 2025, citations: 3, type: 'International Journal', tags: ['UWB'] },
             { title: 'A Study on the Displacement Measurement of the Slope using Network RTK UAV', authors: 'J Cho, J Lee, J Yang, B Lee', journal: 'Journal of the Korean Society of Hazard Mitigation', year: 2021, citations: 1, type: 'Domestic Journal', tags: ['UAV'] },
             { title: 'Erratum to: A Study on Anchor Placement and 3D Positioning Algorithm for UWB Application in Small Sites', authors: 'J Cho, S Jeong, B Lee', journal: 'KSCE Journal of Civil Engineering', year: 2024, citations: 1, type: 'International Journal', tags: ['UWB'] },
-            { title: 'Optimal ground control point layout for UAV photogrammetry in high precision 3D mapping', authors: 'JM Cho, S Jeong, B Lee', journal: 'Measurement', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV'] },
-            { title: 'Proposal of the modified bearing capacity formula of micropile considering the skin friction of the upper ground', authors: 'J Cho', journal: 'Kyonggi University (Master Thesis)', year: 2023, citations: 0, type: 'Conference', tags: ['Micropile'] },
+            { title: 'Optimal ground control point layout for UAV photogrammetry in high precision 3D mapping (JIF 90%)', authors: 'J Cho, S Jeong, B Lee', journal: 'Measurement', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV'] },
+            { title: 'Proposal of the modified bearing capacity formula of micropile considering the skin friction of the upper ground', authors: 'J Cho', journal: 'Kyonggi University (Master Thesis)', year: 2023, citations: 0, type: 'Thesis', tags: ['Micropile'] },
             { title: 'Generate point clouds with detected object information using YOLOv8s Seg model and RTK UAV photogrammetry', authors: 'J Cho, S Jeong, J Lee, T Kim, Y Moon, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and Cartography', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV'] },
+            { title: 'Suggest a combination of multi-frequency WiFi bands for ranging indoor positioning', authors: 'S Jeong, J Cho, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and Cartography', year: 2025, citations: 0, type: 'International Journal', tags: ['UWB'] },
             { title: 'Implementation of Integrated Smart Construction Monitoring System Based on Point Cloud Data and IoT Technique', authors: 'JY Kim, S Kang, J Cho, S Jeong, S Kim, Y Sung, B Lee, GH Kim', journal: 'Sensors', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV', 'UWB'] },
         ]
     };
@@ -440,10 +513,10 @@ document.addEventListener('DOMContentLoaded', function () {
         citationsChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
+                labels: ['2021', '2022', '2023', '2024', '2025'],
                 datasets: [{
                     label: langData[lang]['chart.label'],
-                    data: [16, 13, 28, 19, 31, 3],
+                    data: [7, 15, 16, 35, 34],
                     backgroundColor: 'rgba(59, 130, 246, 0.5)',
                     borderColor: 'rgba(59, 130, 246, 1)',
                     borderWidth: 1,
@@ -534,4 +607,4 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 </body>
-</html>
+</ht
